@@ -33,6 +33,7 @@ body {
     padding: 0 15px;
     line-height: 1;
     box-sizing: border-box;
+    background-color: transparent;
 }
 
 .text-row {
@@ -63,6 +64,10 @@ body {
     position: relative;
     overflow: hidden;
     min-width: 0;
+    background: transparent;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 100%);
 }
 
 /* Устанавливаем ширину для полосок на десктопе */
@@ -84,10 +89,13 @@ body {
 
 /* Стили для видео в полосках */
 .video-stripe .main-video {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
+    left: 0;
+    top: 0;
+    z-index: -1;
 }
 
 /* Мобильная версия */
@@ -102,6 +110,7 @@ body {
     padding: 0 15px;
     line-height: 1;
     box-sizing: border-box;
+    background-color: transparent;
 }
 
 .mobile-row {
@@ -122,6 +131,7 @@ body {
     position: relative;
     overflow: hidden;
     width: 100%;
+    background: transparent;
 }
 
 /* Медиа-запросы для десктопа */
@@ -272,6 +282,20 @@ body {
     
     .mobile-row:nth-child(6) .main-video {
         object-position: center 80%;
+    }
+    
+    .mobile-version .video-stripe .main-video {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        left: 0;
+        top: 0;
+        z-index: -1;
+    }
+    
+    .mobile-version .video-stripe {
+        background: transparent;
     }
 }
 
