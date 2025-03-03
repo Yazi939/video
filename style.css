@@ -8,6 +8,7 @@
 body {
     margin: 0;
     overflow-x: hidden;
+    font-family: 'SF Pro Display', sans-serif;
 }
 
 .video-text-container {
@@ -18,7 +19,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 3rem;
+    padding-top: clamp(2rem, 5vh, 4rem);
     overflow: hidden;
 }
 
@@ -26,12 +27,12 @@ body {
 .text-overlay {
     position: relative;
     color: white;
-    font-size: 6.5rem;
+    font-size: clamp(2.5rem, 3vw + 1.5rem, 6rem);
     font-weight: bold;
     width: 100%;
-    font-family: 'SF Pro Display';
-    padding: 0 15px;
-    line-height: 1;
+    max-width: 1600px;
+    padding: 0 clamp(15px, 3vw, 40px);
+    line-height: 1.1;
     box-sizing: border-box;
     background-color: transparent;
 }
@@ -39,50 +40,41 @@ body {
 .text-row {
     display: flex;
     align-items: center;
-    margin: 1rem 0;
+    margin: clamp(0.5rem, 1vh + 0.3rem, 1.5rem) 0;
     width: 100%;
     justify-content: space-between;
 }
 
 .text-row span {
     white-space: nowrap;
-    line-height: 1;
+    line-height: 1.1;
+    padding: 0 clamp(5px, 1vw, 15px);
 }
 
 .center-wrapper {
     display: flex;
     align-items: center;
-    gap: 15px;
     flex: 1;
     justify-content: center;
-    margin: 0 35px;
+    margin: 0 clamp(10px, 2vw, 30px);
     width: 100%;
 }
 
 .video-stripe {
-    height: 80px;
+    height: clamp(30px, 5vh + 20px, 80px);
     position: relative;
     overflow: hidden;
-    min-width: 0;
+    width: 100%;
     background: transparent;
     z-index: 1;
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 100%);
     mask-image: linear-gradient(to bottom, black 0%, black 100%);
 }
 
-/* Устанавливаем ширину для полосок на десктопе */
-.text-row:nth-child(1) .video-stripe {
-    width: 100%;
-}
-
-.text-row:nth-child(2) .video-stripe {
-    width: 100%;
-}
-
-.text-row:nth-child(3) .video-stripe {
-    width: 100%;
-}
-
+/* Разная ширина для полосок */
+.text-row:nth-child(1) .video-stripe,
+.text-row:nth-child(2) .video-stripe,
+.text-row:nth-child(3) .video-stripe,
 .text-row:last-child .video-stripe {
     width: 100%;
 }
@@ -98,17 +90,34 @@ body {
     z-index: -1;
 }
 
+/* Разные позиции для видео в полосках */
+.text-row:nth-child(1) .main-video {
+    object-position: center 10%;
+}
+
+.text-row:nth-child(2) .main-video {
+    object-position: center 30%;
+}
+
+.text-row:nth-child(3) .main-video {
+    object-position: center 50%;
+}
+
+.text-row:last-child .main-video {
+    object-position: center 70%;
+}
+
 /* Мобильная версия */
 .mobile-version {
     display: none;
     position: relative;
     color: white;
-    font-size: 2.2rem;
-    font-weight: bold;
+    font-size: clamp(2rem, 3vw + 1.2rem, 3.2rem);
+    font-weight: 900;
     width: 100%;
-    font-family: 'SF Pro Display';
-    padding: 0 15px;
-    line-height: 1;
+    max-width: 800px;
+    padding: 0 clamp(15px, 4vw, 25px);
+    line-height: 1.2;
     box-sizing: border-box;
     background-color: transparent;
 }
@@ -117,66 +126,67 @@ body {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    margin: 0.8rem 0;
+    margin: clamp(0.7rem, 1.5vh + 0.3rem, 1.2rem) 0;
     width: 100%;
     justify-content: space-between;
 }
 
 .mobile-stripe-wrapper {
-    margin: 5px 0;
+    margin: clamp(5px, 1vh, 10px) 0;
 }
 
 .mobile-version .video-stripe {
-    height: 25px;
+    height: clamp(25px, 4.5vh + 8px, 40px);
     position: relative;
     overflow: hidden;
-    width: 100%;
     background: transparent;
 }
 
-/* Медиа-запросы для десктопа */
-@media (max-width: 1400px) {
-    .text-overlay {
-        font-size: 5.5rem;
-    }
-    
-    .video-stripe {
-        height: 70px;
-    }
+/* Удаляем фиксированную ширину для полосок в мобильной версии */
+.mobile-row:nth-child(1) .mobile-stripe-wrapper,
+.mobile-row:nth-child(2) .mobile-stripe-wrapper,
+.mobile-row:nth-child(3) .mobile-stripe-wrapper,
+.mobile-row:nth-child(5) .mobile-stripe-wrapper,
+.mobile-row:nth-child(6) .mobile-stripe-wrapper {
+    width: 100%; /* Меняем на 100% */
+    flex: 1; /* Добавляем flex: 1 */
 }
 
-@media (max-width: 1200px) {
-    .text-overlay {
-        font-size: 4.5rem;
-    }
-    
-    .video-stripe {
-        height: 60px;
-    }
-    
-    .center-wrapper {
-        margin: 0 20px;
-    }
+/* Делаем полоски уже */
+.mobile-row:nth-child(1) .mobile-stripe-wrapper {
+    width: 40%;
 }
 
-@media (max-width: 768px) {
-    .text-overlay {
-        font-size: 3.5rem;
-    }
-    
-    .video-stripe {
-        height: 45px;
-    }
-    
-    .center-wrapper {
-        margin: 0 15px;
-    }
+.mobile-row:nth-child(2) .mobile-stripe-wrapper {
+    width: 20%;
+    flex: 0 0 20%;
+}
+
+.mobile-row:nth-child(3) .mobile-stripe-wrapper {
+    width: 15%;
+    flex: 0 0 15%;
+}
+
+.mobile-row:nth-child(5) .mobile-stripe-wrapper {
+    width: 18%;
+    flex: 0 0 18%;
+}
+
+.mobile-row:nth-child(6) .mobile-stripe-wrapper {
+    width: 30%;
+    flex: 0 0 30%;
+}
+
+/* Добавляем отступы полоскам по бокам в мобильной версии */
+.mobile-version .mobile-stripe-wrapper {
+    padding: 0 10px; /* Добавляем отступы по бокам */
+    box-sizing: border-box; /* Чтобы отступы не увеличивали общую ширину */
 }
 
 /* Медиа-запрос для мобильных устройств */
-@media (max-width: 480px) {
+@media (max-width: 800px) {
     .video-text-container {
-        padding-top: 2rem;
+        padding-top: clamp(2rem, 4vh, 3rem);
     }
     
     .text-overlay {
@@ -187,51 +197,23 @@ body {
         display: block;
     }
     
-    /* Восстанавливаем структуру мобильных строк */
-    .mobile-row {
-        display: flex;
-        flex-wrap: nowrap;
-        margin: 0.8rem 0;
-        width: 100%;
-        box-sizing: border-box;
-        justify-content: space-between !important;
-    }
-    
     /* Стили для конкретных строк */
-    .mobile-row:nth-child(1) {
-        flex-direction: row;
-        align-items: flex-start;
-    }
-    
-    .mobile-row:nth-child(1) span {
-        display: block;
-        width: auto;
-    }
-    
     .mobile-row:nth-child(1) .mobile-stripe-wrapper {
-        width: 40%;
+        width: 100%; /* Меняем с 60% на 100% */
+        flex: 1;
         align-self: flex-end;
-        margin-top: 5px;
-    }
-    
-    .mobile-row:nth-child(2) {
-        gap: 8px;
-        justify-content: space-between !important;
+        margin-top: clamp(3px, 1vh, 8px);
     }
     
     .mobile-row:nth-child(2) .mobile-stripe-wrapper {
-        width: 30%;
-        flex: 0 0 30%;
-    }
-    
-    .mobile-row:nth-child(3) {
-        justify-content: space-between !important;
+        width: 100%; /* Меняем с 30% на 100% */
+        flex: 1;
     }
     
     .mobile-row:nth-child(3) .mobile-stripe-wrapper {
-        width: 20%;
-        flex: 0 0 20%;
-        margin-right: 8px;
+        width: 100%; /* Меняем с 20% на 100% */
+        flex: 1;
+        margin-right: clamp(5px, 1vw, 10px);
     }
     
     .mobile-row:nth-child(4) {
@@ -239,28 +221,14 @@ body {
         align-items: flex-start;
     }
     
-    .mobile-row:nth-child(4) span {
-        display: block;
-        width: auto;
-    }
-    
-    .mobile-row:nth-child(5) {
-        gap: 8px;
-        justify-content: space-between !important;
-    }
-    
     .mobile-row:nth-child(5) .mobile-stripe-wrapper {
-        width: 25%;
-        flex: 0 0 25%;
-    }
-    
-    .mobile-row:nth-child(6) {
-        justify-content: space-between !important;
+        width: 100%; /* Меняем с 25% на 100% */
+        flex: 1;
     }
     
     .mobile-row:nth-child(6) .mobile-stripe-wrapper {
-        width: 40%;
-        flex: 0 0 40%;
+        width: 100%; /* Меняем с 40% на 100% */
+        flex: 1;
     }
     
     /* Исправляем проблему с одинаковыми видео в полосках */
@@ -294,24 +262,32 @@ body {
         z-index: -1;
     }
     
-    .mobile-version .video-stripe {
-        background: transparent;
+    /* Добавляем дополнительные медиа-запросы для более плавной адаптации */
+    @media (min-width: 600px) {
+        .mobile-version {
+            font-size: clamp(2.2rem, 3.5vw + 1.2rem, 3.5rem);
+        }
+        
+        .mobile-version .video-stripe {
+            height: clamp(28px, 5vh + 8px, 45px);
+        }
+        
+        .mobile-version .mobile-stripe-wrapper {
+            padding: 0 15px; /* Больше отступы для планшетов */
+        }
     }
-}
-
-/* Разные позиции для видео в полосках на десктопе */
-.text-row:nth-child(1) .main-video {
-    object-position: center 10%;
-}
-
-.text-row:nth-child(2) .main-video {
-    object-position: center 30%;
-}
-
-.text-row:nth-child(3) .main-video {
-    object-position: center 50%;
-}
-
-.text-row:last-child .main-video {
-    object-position: center 70%;
+    
+    @media (max-width: 400px) {
+        .mobile-version {
+            font-size: clamp(1.8rem, 2.5vw + 1rem, 2.5rem);
+        }
+        
+        .mobile-version .video-stripe {
+            height: clamp(22px, 4vh + 6px, 35px);
+        }
+        
+        .mobile-version .mobile-stripe-wrapper {
+            padding: 0 8px; /* Меньше отступы для маленьких телефонов */
+        }
+    }
 }
